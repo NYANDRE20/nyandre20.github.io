@@ -149,12 +149,13 @@ btn.addEventListener('click', () => {
 })();
 
 // Bouton "Afficher mon numéro" : 1er clic = affiche le numéro, 2e clic = lance l'appel (mobile)
-(function () {
-  var btn = document.getElementById('phoneBtn');
-  if (!btn) return;
+  (function () {
+    var btn = document.getElementById('phoneBtn');
+    if (!btn) return;
     var intl = ['+33', '6', '75', '33', '01', '90'];
     var shown = false;
-    btn.addEventListener('click', function () {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
       if (!shown) {
         btn.textContent = '+33 6 75 33 01 90';
         btn.setAttribute('aria-label', 'Appeler le ' + btn.textContent);
