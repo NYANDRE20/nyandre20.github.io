@@ -1,6 +1,6 @@
 # Bonjour, je suis Yaël André NEYPATRAIKY 👋
 
-Étudiant en cybersécurité à **Oteria** en cursus Expert Cybersécurité, je compte faire une spécialisation en analyse de vulnérabilités et gestion des risques. Rigoureux et méthodique, j'aime structurer des données complexes en recommandations claires. Mon parcours international (France et Madagascar) m'a donné une grande capacité d'adaptation et l'habitude de travailler dans un environnement multiculturel.
+Étudiant en cybersécurité à **Oteria** en cursus Expert Cybersécurité, je suis actuellement en train de me spécialiser dans les métiers des Systèmes, Réseaux et Cybersécurité, ainsi que la Gestion des Risques Cyber. Rigoureux et méthodique, j'aime structurer des données complexes en recommandations claires. Mon parcours international (France et Madagascar) m'a donné une grande capacité d'adaptation et l'habitude de travailler dans un environnement multiculturel.
 
 ## Objectif
 
@@ -39,7 +39,6 @@ Je recherche une **alternance Systèmes, Réseaux et Sécurité** à partir d'**
 ![EBIOS RM](https://img.shields.io/badge/EBIOS_RM-5198CB?style=flat)
 ![ISO 27001](https://img.shields.io/badge/ISO_27001-1D5D86?style=flat)
 ![RGPD](https://img.shields.io/badge/RGPD-003399?style=flat)
-![NIST](https://img.shields.io/badge/NIST-555555?style=flat)
 
 **Développement et automatisation**
 
@@ -51,6 +50,9 @@ Je recherche une **alternance Systèmes, Réseaux et Sécurité** à partir d'**
 ## Projets
 
 - **Reconnaissance réseau et Metasploit** : scans Nmap et exploitation de vulnérabilités sur plusieurs machines, jusqu'à la capture de flags.
+- **Cartographie réseau par scan (en cours)**: Développement d’une application web de cartographie automatisée d’un parc informatique à partir de scans réseau.
+- **Détection et classification de vulnérabilités** : Recherche, qualification de vulnérabilités via les bases CVE/NVD et les scores CVSS. Priorisation selon la criticité et rédaction de rapports de synthèse.
+- **Gestion d’outils de logs (IDS)** : Déploiement et analyse d’un IDS pour détecter les scans et les comportements anormaux.
 
 ## Me contacter
 
