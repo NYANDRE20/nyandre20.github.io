@@ -1,8 +1,6 @@
 :root {
   --black: #0B0D10;
-  --beige: #bdb39e;
-  --blue: #e7d3c0;
-  --blue-soft: #B7DBF3;
+  --cream: #FDE1AC;
   --nav-h: 84px;
 }
 
@@ -20,9 +18,15 @@ html {
 }
 
 body {
-  background: var(--black);
-  color: var(--beige);
+  background: #D4ECF8;
+  color: #1062da;
   font: 400 1.05rem/1.6 "IBM Plex Sans", system-ui, sans-serif;
+  transition: background .3s ease, color .3s ease;
+}
+
+html[data-theme="dark"] body {
+  background: #271403;
+  color: #F8EDDD;
 }
 
 h1,
@@ -46,7 +50,7 @@ h3 {
 }
 
 :focus-visible {
-  outline: 3px solid var(--blue);
+  outline: 3px solid var(--accent, var(--cream));
   outline-offset: 3px;
 }
 
@@ -57,38 +61,75 @@ code {
 
 /* ---------- Sections : une page = un écran ---------- */
 section {
-  min-height: 100vh;
   min-height: 100svh;
   scroll-snap-align: start;
   display: flex;
   align-items: center;
   padding: calc(var(--nav-h) + 1.5rem) clamp(1.2rem, 4vw, 6rem) 2.5rem;
 
-  /* thème sombre par défaut */
-  --bg: var(--black);
-  --ink: var(--beige);
-  --muted: #B3AC9E;
-  --card: #14181D;
-  --line: #2A323B;
-  --accent: var(--blue);
-  --fill: #5198cb;
-  --fill-ink: var(--blue);
-
   background: var(--bg);
   color: var(--ink);
+  transition: background .3s ease, color .3s ease;
 }
 
-/* sections claires (beige) */
-#parcours,
-#projets {
-  --bg: var(--beige);
-  --ink: var(--black);
-  --muted: #5B5648;
-  --card: #F8F3E9;
-  --line: #CDBFA6;
-  --accent: #1D5D86;
-  --fill: var(--blue-soft);
-  --fill-ink: var(--black);
+/* ---------- Palettes : alternance tone-a / tone-b ----------
+   Les sections ET la nav partagent les mêmes variables.
+   --nav-bg = fond de la nav, un cran plus foncé que --bg.
+   Tous les textes (--ink, --muted, --accent) sont >= 7:1 (WCAG AAA)
+   sur --bg, --card et --nav-bg. Tags : --fill-ink sur --fill >= 9:1. */
+
+/* Thème clair */
+section.tone-a,
+nav.tone-a {
+  --bg: #0B4660;
+  --nav-bg: #072F43;
+  --card: #0E4A64;
+  --ink: #FFFFFF;
+  --muted: #D9E8F0;
+  --accent: #9AF3F7;
+  --line: rgba(255, 255, 255, .25);
+  --fill: #F4F1EA;
+  --fill-ink: #14212B;
+}
+
+section.tone-b,
+nav.tone-b {
+  --bg: #D4ECF8;
+  --nav-bg: #B4D8EC;
+  --card: #F1F9FD;
+  --ink: #1062da;
+  --muted: #2F3B4A;
+  --accent: #063A7E;
+  --line: #8FB4CC;
+  --fill: #8FC3EA;
+  --fill-ink: #0A1A2E;
+}
+
+/* Thème sombre */
+html[data-theme="dark"] section.tone-a,
+html[data-theme="dark"] nav.tone-a {
+  --bg: #06182F;
+  --nav-bg: #030D1C;
+  --card: #10294A;
+  --ink: #EAF1FA;
+  --muted: #BCCCE0;
+  --accent: #F0CB86;
+  --line: #2F4663;
+  --fill: #1D3558;
+  --fill-ink: #EAF1FA;
+}
+
+html[data-theme="dark"] section.tone-b,
+html[data-theme="dark"] nav.tone-b {
+  --bg: #231003;
+  --nav-bg: #190C03;
+  --card: #3B2210;
+  --ink: #F8EDDD;
+  --muted: #DAC5AD;
+  --accent: #F5B36B;
+  --line: #5E4128;
+  --fill: #4F3018;
+  --fill-ink: #F8EDDD;
 }
 
 .wrap {
@@ -134,9 +175,11 @@ nav {
   right: 0;
   z-index: 10;
   height: var(--nav-h);
-  background: rgba(11, 13, 16, .9);
+  background: color-mix(in srgb, var(--nav-bg) 96%, transparent);
+  color: var(--ink);
   backdrop-filter: blur(8px);
-  border-bottom: 1px solid #2A323B;
+  border-bottom: 1px solid var(--line);
+  transition: background .3s ease, color .3s ease, border-color .3s ease;
 }
 
 nav .wrap {
@@ -144,7 +187,7 @@ nav .wrap {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 1rem;
   padding: 0 2rem;
   flex-wrap: nowrap;
@@ -162,7 +205,7 @@ nav strong {
   font-size: clamp(2rem, 3vw, 3rem);
   font-weight: 1000;
   letter-spacing: -.02em;
-  color: var(--blue);
+  color: var(--accent);
   transition: opacity .15s, transform .15s;
 }
 
@@ -179,7 +222,7 @@ nav ul {
 
 nav a {
   text-decoration: none;
-  color: var(--beige);
+  color: var(--accent);
   font-weight: 500;
   font-size: .95rem;
   padding: .3rem 0;
@@ -187,9 +230,54 @@ nav a {
 }
 
 nav a:hover {
-  color: var(--blue);
+  color: var(--ink);
 }
 
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background .2s ease, transform .3s ease, border-color .2s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--fill);
+  transform: rotate(18deg);
+}
+
+.theme-toggle { position: relative; }
+
+.theme-toggle::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  white-space: nowrap;
+  padding: .35rem .7rem;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--nav-bg);
+  font: 500 .85rem/1.2 "IBM Plex Sans", system-ui, sans-serif;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.theme-toggle:hover::after,
+.theme-toggle:focus-visible::after {
+  opacity: 1;
+  transform: none;
+}
 
 /* ---------- Boutons, tags, cartes ---------- */
 a {
@@ -200,11 +288,11 @@ a {
   display: inline-block;
   padding: .65rem 1.3rem;
   border-radius: 99px;
-  background: var(--blue);
+  background: var(--cream);
   color: var(--black);
   font-weight: 500;
   text-decoration: none;
-  border: 2px solid var(--blue);
+  border: 2px solid var(--cream);
 }
 
 .btn:hover {
@@ -240,6 +328,7 @@ a {
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 1rem;
+  transition: background .3s ease, border-color .3s ease;
 }
 
 
@@ -259,7 +348,7 @@ a {
 
 .hero .role {
   font-size: 1.3rem;
-  color: var(--blue);
+  color: var(--accent);
   font-weight: 500;
   margin: 1rem 1rem 2rem;
 }
@@ -275,13 +364,13 @@ a {
   aspect-ratio: 4 / 5;
   object-fit: cover;
   border-radius: 140px 140px 24px 24px;
-  border: 2px solid var(--beige);
+  border: 2px solid var(--ink);
   background: var(--fill);
 }
 
 .cols {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
   margin-top: 2.5rem;
 }
@@ -303,20 +392,46 @@ a {
   border: none;
 }
 
-
 /* ---------- 2. Parcours (frise horizontale) ---------- */
 .timeline {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: clamp(1rem, 2vw, 2.5rem);
+  grid-template-rows: auto auto auto auto auto;
+  gap: 0 clamp(1rem, 2vw, 2.5rem);   /* row-gap à 0, column-gap inchangé */
   align-items: stretch;
   border-top: 3px solid var(--ink);
   padding-top: 2.2rem;
   margin-top: 1rem;
 }
 
+/* L'ordre du HTML est du plus récent au plus ancien : on l'inverse à
+   l'affichage (desktop ET mobile) pour que la frise se lise dans le sens
+   chronologique, du plus ancien au plus récent. */
+.step:nth-child(1) { order: 4; }
+.step:nth-child(2) { order: 3; }
+.step:nth-child(3) { order: 2; }
+.step:nth-child(4) { order: 1; }
+
+/* Flèche indiquant le sens de la chronologie, au bout de la ligne */
+.timeline::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -2px;
+  width: 0;
+  height: 0;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-left: 15px solid var(--ink);
+  transform: translateY(-50%);
+}
+
 .step {
   position: relative;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 5;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 16px;
@@ -326,22 +441,56 @@ a {
 .step::before {
   content: "";
   position: absolute;
-  left: 1.5rem;
-  top: calc(-2.2rem - 10.5px - 1px);
+  left: 50%;
+  top: calc(-2.2rem - 11px - 1px);
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--blue);
+  background: var(--accent);
   border: 3px solid var(--ink);
+  transform: translateX(-50%);
 }
 
+/* Ligne 1 : date */
+.step .date {
+  grid-row: 1;
+  align-self: start;
+}
+
+/* Ligne 2 : titre, étiré sur toute la ligne pour que le filet
+   tombe à la même hauteur sur les 4 cartes */
 .step h3 {
+  grid-row: 2;
+  align-self: stretch;
+  display: flex;
+  align-items: flex-start;
   font-size: clamp(1.15rem, 1.5vw, 1.6rem);
-  margin-top: .3rem;
+  margin-top: 0;
+  padding-bottom: .8rem;
+  border-bottom: 1px solid var(--line);
 }
 
-.step p {
+/* Ligne 3 : lieu, mis en valeur */
+.step p.muted {
+  grid-row: 3;
+  align-self: start;
   margin-top: .5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* Ligne 4 : description */
+.step p:not(.muted) {
+  grid-row: 4;
+  align-self: start;
+  margin-top: .4rem;
+}
+
+/* Ligne 5 : compétences, en pied de bloc */
+.step .bubble {
+  grid-row: 5;
+  align-self: end;
+  margin-top: .8rem;
 }
 
 .shots {
@@ -363,26 +512,29 @@ a {
   display: inline-block;
   margin-top: 8px;
   padding: 10px 14px;
-  background-color: #f1f5f9;
+  background-color: var(--fill);
+  color: var(--fill-ink);
   border-radius: 14px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--line);
   font-size: 0.85rem;
-  color: #334155;
   line-height: 1.4;
   max-width: 100%;
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease;
 }
 
 /* ---------- 3. Expériences ---------- */
 .exp {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-rows: auto auto auto auto;
   gap: clamp(1rem, 2vw, 2.5rem);
   align-items: stretch;
 }
 
 .exp article {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 4;
   padding: clamp(1.1rem, 1.6vw, 2rem);
   font-size: .98rem;
   line-height: 1.5;
@@ -393,29 +545,57 @@ a {
   margin-top: .3rem;
 }
 
-.exp ul.missions {
-  margin: .8rem 0 0 1.1rem;
-}
-
-.exp ul.missions li {
+.exp .date {
+  display: block;
   margin-bottom: .35rem;
 }
 
+/* Zone 1 : titre du poste et date */
+.exp header {
+  grid-row: 1;
+  align-self: stretch;
+  margin-bottom: 0;
+  padding-bottom: .9rem;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Zone 2 : missions */
+.exp ul.missions {
+  grid-row: 2;
+  align-self: stretch;
+  margin: 0 0 0 1.1rem;
+  padding-bottom: 0;
+}
+
+.exp ul.missions li {
+  margin-bottom: .5rem;
+}
+
+.exp ul.missions li:last-child {
+  margin-bottom: 0;
+}
+
+/* Zone 3 : compétences */
 .exp .tags {
-  margin-bottom: 1.2rem;
+  grid-row: 3;
+  align-self: stretch;
+  align-content: flex-start;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Zone 4 : recommandation du tuteur, toujours collée en bas de la carte */
+.exp blockquote {
+  grid-row: 4;
+  align-self: end;
+  margin-top: 0;
 }
 
 blockquote {
-  margin-top: 1.2rem;
   padding: .9rem 1rem;
-  border-left: 4px solid var(--blue);
-  background: var(--fill);
+  border-left: 4px solid var(--accent);
+  background: var(--card);
   border-radius: 0 12px 12px 0;
-}
-
-/* la recommandation reste toujours en bas de la carte */
-.exp blockquote {
-  margin-top: auto;
 }
 
 blockquote footer {
@@ -429,75 +609,134 @@ blockquote .btn {
   padding: .5rem 1rem;
 }
 
-
 /* ---------- 4. Projets ---------- */
 .projects {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto auto auto auto auto;
   gap: clamp(1rem, 2vw, 2.5rem);
   align-items: stretch;
 }
 
 .project {
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 6;
   padding: clamp(1.1rem, 1.6vw, 2rem);
-  min-height: clamp(14rem, 36vh, 26rem);
+  cursor: pointer;
+  transition: background .3s ease, border-color .3s ease, box-shadow .25s ease, transform .25s ease;
+}
+
+.project:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .18);
+  transform: translateY(-2px);
 }
 
 .project > div {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: 1 / -1;
 }
 
+/* Ligne 1 : titre */
 .project h3 {
+  grid-row: 1;
+  align-self: start;
   font-size: clamp(1.3rem, 1.8vw, 1.9rem);
   margin-bottom: .6rem;
 }
 
-.project p {
+/* Ligne 2 : description */
+.project > div > p:first-of-type {
+  grid-row: 2;
+  align-self: start;
   margin-top: .5rem;
   font-size: 1.02rem;
 }
 
+/* Ligne 3 : compétences */
 .project .tags {
-  margin-top: auto;
-  padding-top: 1.2rem;
+  grid-row: 3;
+  align-self: start;
+  margin-top: .8rem;
 }
 
-pre {
-  background: var(--black);
-  color: #E6EEF5;
-  padding: 1.1rem;
-  border-radius: 12px;
-  overflow-x: auto;
-  font: .86rem/1.55 ui-monospace, Menlo, Consolas, monospace;
-  margin-top: 1rem;
-}
-
-.k {
-  color: #7DD3C8;
-}
-
-.s {
-  color: #E9C46A;
-}
-
-.c {
-  color: #7F93A3;
+/* Ligne 4 : difficultés */
+.difficulties {
+  grid-row: 4;
+  align-self: start;
+  font-size: 0.85rem;
+  color: var(--muted);
   font-style: italic;
+  margin-top: 6px;
+  transition: color .3s ease;
 }
 
-.f {
-  color: #A9C7FF;
+.hint {
+  font-size: .78rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: .6rem;
 }
 
+/* Ligne 5 : résumé des compétences mobilisées */
+.project .bubble {
+  grid-row: 5;
+  align-self: start;
+}
+
+/* Ligne 6 : lien vers le cahier des charges, toujours en bas de la carte */
+.project > div > p:last-child {
+  grid-row: 6;
+  align-self: end;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+/* Captures d'écran : overlay en position absolue, révélé au survol de LA
+   carte concernée. Comme l'élément est sorti du flux normal, il ne modifie
+   jamais la hauteur de la carte et ne peut donc pas pousser sa voisine. */
+.screenshots {
+  position: absolute;
+  left: clamp(1.1rem, 1.6vw, 2rem);
+  right: clamp(1.1rem, 1.6vw, 2rem);
+  bottom: clamp(1.1rem, 1.6vw, 2rem);
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+  padding: .6rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .28);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+.project:hover .screenshots,
+.project:focus-within .screenshots,
+.project.active .screenshots {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.screenshots img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
 
 /* ---------- 5. CV ---------- */
 .cv {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: clamp(1rem, 2vw, 2.5rem);
   align-items: stretch;
 }
@@ -533,34 +772,36 @@ pre {
 footer.site {
   padding: 1.5rem;
   text-align: center;
-  color: var(--muted);
+  color: #BEE8F8;
   font-size: .9rem;
   background: var(--black);
-  border-top: 1px solid #2A323B;
+  border-top: 1px solid #27313D;
+}
+
+/* ---------- Ordinateur : hauteur confortable pour les étapes du parcours ---------- */
+@media (min-width: 1001px) {
+  .step {
+    min-height: clamp(12rem, 30vh, 24rem);
+  }
 }
 
 
-/* ---------- Ordinateur : la frise commence par 2021 ---------- */
-@media (min-width: 1001px) {
-  /* l'ordre du HTML est du plus récent au plus ancien : on l'inverse à l'affichage */
-  .step:nth-child(1) {
-    order: 4;
+/* ---------- Présentation : empile texte et photo sur petit écran ---------- */
+@media (max-width: 700px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
   }
 
-  .step:nth-child(2) {
-    order: 3;
+  .hero .photo {
+    justify-self: center;
   }
 
-  .step:nth-child(3) {
-    order: 2;
-  }
-
-  .step:nth-child(4) {
-    order: 1;
-  }
-
-  .step {
-    min-height: clamp(12rem, 30vh, 24rem);
+  .hero p,
+  .hero .role {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 
@@ -590,6 +831,12 @@ footer.site {
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  .theme-toggle {
+    position: absolute;
+    top: .6rem;
+    left: .6rem;
+  }
 }
 
 
@@ -609,11 +856,6 @@ footer.site {
 
   .project {
     min-height: 0;
-  }
-
-  .intro {
-    grid-template-columns: 1fr;
-    gap: 2rem;
   }
 
   .identity {
@@ -638,8 +880,20 @@ footer.site {
   }
 
   .step::before {
-    left: calc(-2rem - 10.5px - 1px);
+    left: calc(-2rem - 11px - 1px);
     top: 1.4rem;
+  }
+
+  .timeline::after {
+    top: auto;
+    bottom: -2px;
+    left: -9px;
+    right: auto;
+    transform: none;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 15px solid var(--ink);
+    border-bottom: none;
   }
 }
 
@@ -673,10 +927,6 @@ footer.site {
     font-size: .85rem;
   }
 
-  .cv {
-    grid-template-columns: 1fr;
-  }
-
   .photo {
     width: 200px;
   }
@@ -689,5 +939,95 @@ footer.site {
 
   nav strong {
     transition: none;
+  }
+
+  .project,
+  .screenshots {
+    transition: none;
+  }
+}
+
+/* ---------- Mode "projet développé" (clic), écrans larges uniquement ---------- */
+@media (min-width: 1001px) {
+  .projects.has-active {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+
+  .projects.has-active .project {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-height: clamp(22rem, 62vh, 36rem);
+    transform: none !important;
+  }
+
+  .projects.has-active .project > div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .projects.has-active .project.active {
+    flex: 5 1 0;
+  }
+
+  .projects.has-active .project:not(.active) {
+    flex: .7 1 0;
+    opacity: .7;
+    overflow: hidden;
+  }
+
+  .projects.has-active .project:not(.active):hover {
+    opacity: 1;
+    box-shadow: none;
+  }
+
+  .projects.has-active .project:not(.active) p,
+  .projects.has-active .project:not(.active) .tags,
+  .projects.has-active .project:not(.active) .bubble,
+  .projects.has-active .project:not(.active) .screenshots {
+    display: none;
+  }
+
+  .projects.has-active .project:not(.active) h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0;
+  }
+
+  .projects.has-active .project.active .screenshots {
+    position: static;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    box-shadow: none;
+    margin-top: .9rem;
+  }
+
+  .projects.has-active .project.active .screenshots img {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* ---------- Mobile / tablette : une carte par ligne, pas de subgrid ---------- */
+@media (max-width: 1000px) {
+  .projects {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project,
+  .project > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project {
+    min-height: 0;
+  }
+
+  .project > div > p:last-child {
+    margin-top: auto;
   }
 }
