@@ -184,66 +184,49 @@
     <!-- 4. PROJETS -->
     <section id="projets" class="tone-b">
       <div class="wrap">
+        <h2>Projets</h2>
         <div class="projects">
-    
-          <div class="project">
-            <div>
-              <h3>Cartographie réseau par scan (En cours)</h3>
-              <p>Application web de cartographie automatisée d'un parc informatique à partir de scans réseau, avec visualisation des hôtes, ports exposés et criticité des actifs.</p>
-              <ul class="tags"><li>Nmap</li><li>Python</li><li>Django</li></ul>
-              <p class="difficulties">Difficultés : calcul des distances entre hôtes pour la représentation graphique, limitation dans l'envoi de plages IP trop larges entraînant des scans incomplets ou des timeouts.</p>
-              <div class="bubble">Scripting Python, parsing de résultats Nmap, visualisation de données, optimisation de requêtes réseau.</div>
-              <p><a class="btn alt" href="Image/cartographie-reseau.pdf" target="_blank" rel="noopener">Voir le cahier des charges</a></p>
-            </div>
-          </div>
-    
-          <div class="project">
-            <div>
-              <h3>Détection et classification de vulnérabilités</h3>
-              <p>Veille et qualification de vulnérabilités via CVE et CVSS, priorisation selon la criticité et rédaction de rapports de synthèse à destination des équipes techniques.</p>
-              <ul class="tags"><li>CVE</li><li>CVSS</li><li>SearchSploit</li></ul>
-              <p class="difficulties">Difficultés : volume important de résultats à trier manuellement, distinction entre vulnérabilités théoriques et réellement exploitables, cohérence des scores CVSS selon les sources.</p>
-              <div class="bubble">Analyse de risques, lecture de bases CVE/NVD, priorisation par criticité, rédaction de rapports techniques.</div>
-              <div class="screenshots">
-                <img src="Image/classification-1.png" alt="Classification vulnérabilités - vue 1" loading="lazy">
-                <img src="Image/classification-2.png" alt="Classification vulnérabilités - vue 2" loading="lazy">
-                <img src="Image/classification-3.png" alt="Classification vulnérabilités - vue 3" loading="lazy">
-              </div>
-              <p><a class="btn alt" href="Image/classification-vulnerabilites.pdf" target="_blank" rel="noopener">Voir le cahier des charges</a></p>
-            </div>
-          </div>
-    
-          <div class="project">
-            <div>
-              <h3>Reconnaissance réseau et Metasploit</h3>
-              <p>Scans Nmap et exploitation de vulnérabilités sur plusieurs machines, avec priorisation des cibles et documentation jusqu'à la capture de flags.</p>
-              <ul class="tags"><li>Nmap</li><li>Metasploit</li></ul>
-              <p class="difficulties">Difficultés : exploits nécessitant une configuration précise (ports, payloads), identification de ports non standards, correspondance entre services détectés et modules Metasploit disponibles.</p>
-              <div class="bubble">Pentest, Metasploit Framework, cassage de hashs (Hashcat), méthodologie d'audit offensif.</div>
-              <div class="screenshots">
-                <img src="Image/metasploit-1.png" alt="Reconnaissance et Metasploit - vue 1" loading="lazy">
-                <img src="Image/metasploit-2.png" alt="Reconnaissance et Metasploit - vue 2" loading="lazy">
-                <img src="Image/metasploit-3.png" alt="Reconnaissance et Metasploit - vue 3" loading="lazy">
-              </div>
-              <p><a class="btn alt" href="Image/reconnaissance-metasploit.pdf" target="_blank" rel="noopener">Voir le cahier des charges</a></p>
-            </div>
-          </div>
-    
-          <div class="project">
-            <div>
-              <h3>Gestion d'outils de logs</h3>
-              <p>Déploiement et analyse d'un IDS pour la détection de scans et de comportements anormaux, corrélation des alertes avec les logs de connexion pour distinguer activité automatisée et manuelle.</p>
-              <ul class="tags"><li>Suricata</li><li>EveBox</li></ul>
-              <p class="difficulties">Difficultés : calibrage des seuils de détection pour limiter les faux positifs sans perdre en couverture, distinction entre scan lent et trafic légitime dans les logs.</p>
-              <div class="bubble">Déploiement IDS, analyse de logs, corrélation d'événements, détection d'anomalies réseau.</div>
-              <div class="screenshots">
-                <img src="Image/logs-1.png" alt="Gestion des logs - vue 1" loading="lazy">
-                <img src="Image/logs-2.png" alt="Gestion des logs - vue 2" loading="lazy">
-                <img src="Image/logs-3.png" alt="Gestion des logs - vue 3" loading="lazy">
-              </div>
-              <p><a class="btn alt" href="Image/gestion-logs.pdf" target="_blank" rel="noopener">Voir le cahier des charges</a></p>
-            </div>
-          </div>
+          <article class="project">
+            <h3>Cartographie réseau par scan <small>en cours</small></h3>
+            <p>Application web de cartographie automatisée d'un parc informatique à partir de scans réseau : hôtes, ports exposés et criticité des actifs.</p>
+            <ul class="tags"><li>Nmap</li><li>Python</li><li>Django</li></ul>
+            <p class="difficulties"><strong>Difficultés :</strong> calcul des distances entre hôtes pour le graphe ; plages IP trop larges qui provoquent des scans incomplets ou des timeouts.</p>
+            <div class="bubble">Scripting Python, parsing de résultats Nmap, visualisation de données, optimisation de requêtes réseau.</div>
+            <p><a class="btn alt" href="Image/cartographie-reseau.pdf" target="_blank" rel="noopener">Voir le cahier des charges</a></p>
+          </article>
+          <article class="project">
+            <h3>Détection et classification de vulnérabilités</h3>
+            <p>Veille et qualification de vulnérabilités via CVE et CVSS, priorisation selon la criticité et rapports de synthèse pour les équipes techniques.</p>
+            <ul class="tags"><li>CVE</li><li>CVSS</li><li>SearchSploit</li></ul>
+            <p class="difficulties"><strong>Difficultés :</strong> gros volume de résultats à trier ; distinguer le théorique de l'exploitable ; scores CVSS incohérents selon les sources.</p>
+            <div class="bubble">Analyse de risques, lecture des bases CVE/NVD, priorisation, rapports techniques.</div>
+            <div class="screenshots"><img src="Image/classification-1.png" alt="Classification des vulnérabilités, vue 1" loading="lazy"><img src="Image/classification-2.png" alt="Classification des vulnérabilités, vue 2" loading="lazy"><img src="Image/classification-3.png" alt="Classification des vulnérabilités, vue 3" loading="lazy"></div>
+            <p><a class="btn alt" href="Image/classification-vulnerabilites.pdf" target="_blank" rel="noopener">Voir le cahier des charges</a></p>
+          </article>
+          <article class="project">
+            <h3>Reconnaissance réseau et Metasploit</h3>
+            <p>Scans Nmap, exploitation de plusieurs machines vulnérables (dont MySQL, CVE-2012-2122) avec extraction et cassage de hashs, jusqu'à la capture de flags.</p>
+            <ul class="tags"><li>Nmap</li><li>Metasploit</li><li>Hashcat</li></ul>
+            <p class="difficulties"><strong>Difficultés :</strong> exploits à configurer précisément (ports, payloads) ; ports non standards ; lien entre services détectés et modules Metasploit.</p>
+            <div class="bubble">Pentest, Metasploit Framework, cassage de hashs, méthodologie d'audit offensif.</div>
+            <div class="screenshots"><img src="Image/metasploit-1.png" alt="Metasploit, vue 1" loading="lazy"><img src="Image/metasploit-2.png" alt="Metasploit, vue 2" loading="lazy"><img src="Image/metasploit-3.png" alt="Metasploit, vue 3" loading="lazy"></div>
+            <p><a class="btn alt" href="Image/reconnaissance-metasploit.pdf" target="_blank" rel="noopener">Voir le cahier des charges</a></p>
+          </article>
+          <article class="project">
+            <h3>Durcissement d'un noyau Linux</h3>
+            <p>Paramètres sysctl pour renforcer la sécurité réseau et la protection mémoire, limites de ressources contre les attaques par épuisement et script de validation automatisé.</p>
+            <ul class="tags"><li>Linux</li><li>sysctl</li><li>Bash</li></ul>
+            <div class="bubble">Durcissement système, sécurité réseau, automatisation de contrôles.</div>
+          </article>
+          <article class="project">
+            <h3>Gestion d'outils de logs</h3>
+            <p>Déploiement d'un IDS pour détecter scans et comportements anormaux, avec corrélation des alertes et des logs de connexion pour distinguer activité automatisée et manuelle.</p>
+            <ul class="tags"><li>Suricata</li><li>EveBox</li></ul>
+            <p class="difficulties"><strong>Difficultés :</strong> seuils de détection à calibrer contre les faux positifs ; distinguer un scan lent du trafic légitime.</p>
+            <div class="bubble">Déploiement IDS, analyse de logs, corrélation d'événements, détection d'anomalies.</div>
+            <div class="screenshots"><img src="Image/logs-1.png" alt="Gestion des logs, vue 1" loading="lazy"><img src="Image/logs-2.png" alt="Gestion des logs, vue 2" loading="lazy"><img src="Image/logs-3.png" alt="Gestion des logs, vue 3" loading="lazy"></div>
+            <p><a class="btn alt" href="Image/gestion-logs.pdf" target="_blank" rel="noopener">Voir le cahier des charges</a></p>
+          </article>
         </div>
       </div>
     </section>
