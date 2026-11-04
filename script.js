@@ -1,48 +1,153 @@
-// Thème clair/sombre (suit le thème du système à la première visite)
+// Barre de navigation interactive : affiche le nom de la section en cours
 (function () {
-  var root = document.documentElement, btn = document.getElementById('themeToggle');
-  if (!btn) return;
-  function apply(t) {
-    root.dataset.theme = t;
-    var next = t === 'dark' ? 'clair' : 'sombre';
-    btn.dataset.tip = 'Thème ' + next;
-    btn.setAttribute('aria-label', 'Passer au thème ' + next);
-  }
-  var saved = null;
-  try { saved = localStorage.getItem('theme'); } catch (e) {}
-  apply(saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
-  btn.addEventListener('click', function () {
-    var t = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    apply(t);
-    try { localStorage.setItem('theme', t); } catch (e) {}
-  });
-})();
- 
-// Barre de navigation : affiche la section en cours, masque son lien
-(function () {
-  var title = document.getElementById('section-title');
-  var links = document.querySelectorAll('nav ul a');
-  var current = '';
-  if (!title || !('IntersectionObserver' in window)) return;
+  var title = document.getElementById("section-title");
+  var links = document.querySelectorAll("nav ul a");
+  var sections = document.querySelectorAll("section[id]");
+  var current = "";
+
   function show(id) {
     if (id === current) return;
     current = id;
     links.forEach(function (a) {
-      var on = a.getAttribute('href') === '#' + id;
-      a.parentElement.hidden = on;
+      var on = a.getAttribute("href") === "#" + id;
+      a.parentElement.hidden = on; // le lien de la section en cours disparaît
       if (on) {
-        title.classList.add('out');
-        setTimeout(function () { title.textContent = a.textContent; title.classList.remove('out'); }, 150);
+        title.classList.add("out");
+        setTimeout(function () {
+          title.textContent = a.textContent;
+          title.classList.remove("out");
+        }, 150);
       }
     });
   }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { if (e.isIntersecting) show(e.target.id); });
-  }, { rootMargin: '-45% 0px -50% 0px' });
-  document.querySelectorAll('section[id]').forEach(function (s) { io.observe(s); });
-  show('presentation');
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) show(e.target.id);
+    });
+  }, { rootMargin: "-45% 0px -50% 0px" });
+
+  sections.forEach(function (s) { observer.observe(s); });
+  show("presentation");
 })();
- 
+
+// Thème clair / sombre, mémorisé d'une visite à l'autre
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById("theme-toggle");
+  var icon = btn ? btn.querySelector(".theme-icon") : null;
+  var theme = localStorage.getItem("theme") || "light";
+
+  function apply(t) {
+    if (t === "dark") {
+      root.setAttribute("data-theme", "dark");
+    } else {
+      root.removeAttribute("data-theme");
+    }
+    if (btn) {
+      btn.setAttribute("aria-pressed", String(t === "dark"));
+      btn.setAttribute("aria-label", t === "dark" ? "Revenir au thème clair" : "Activer le thème sombre");
+    }
+    if (icon) icon.textContent = t === "dark" ? "☀️" : "🌙";
+    localStorage.setItem("theme", t);
+  }
+
+  apply(theme);
+
+  if (btn) {
+    btn.addEventListener("click", function () {
+      theme = theme === "dark" ? "light" : "dark";
+      apply(theme);
+    });
+  }
+})();
+
+// Projets : révéler les captures d'écran au tap, sur les écrans tactiles
+// (sur un écran avec souris, le survol en CSS s'en charge déjà)
+(function () {
+  var projects = document.querySelectorAll(".project");
+  if (!projects.length) return;
+
+  var hasHover = window.matchMedia("(hover: hover)").matches;
+  if (hasHover) return;
+
+  projects.forEach(function (p) {
+    p.addEventListener("click", function (e) {
+      if (e.target.closest("a")) return; // laisse les liens fonctionner normalement
+      var wasActive = p.classList.contains("active");
+      projects.forEach(function (other) { other.classList.remove("active"); });
+      if (!wasActive) p.classList.add("active");
+    });
+  });
+})();
+
+const nav = document.querySelector('nav');
+const sections = document.querySelectorAll('section.tone-a, section.tone-b');
+
+function updateNavTone() {
+  const y = nav.offsetHeight / 2;
+  for (const s of sections) {
+    const r = s.getBoundingClientRect();
+    if (r.top <= y && r.bottom > y) {
+      nav.classList.toggle('tone-a', s.classList.contains('tone-a'));
+      nav.classList.toggle('tone-b', s.classList.contains('tone-b'));
+      break;
+    }
+  }
+}
+
+addEventListener('scroll', updateNavTone, { passive: true });
+addEventListener('resize', updateNavTone);
+updateNavTone();
+
+const root = document.documentElement;
+const btn = document.getElementById('themeToggle');
+
+function applyTheme(theme) {
+  root.dataset.theme = theme;
+  const next = theme === 'dark' ? 'clair' : 'sombre';
+  btn.dataset.tip = `Thème ${next}`;
+  btn.setAttribute('aria-label', `Passer au thème ${next}`);
+  try { localStorage.setItem('theme', theme); } catch (e) {}
+}
+
+let saved = null;
+try { saved = localStorage.getItem('theme'); } catch (e) {}
+applyTheme(saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+btn.addEventListener('click', () => {
+  applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+});
+
+// Projets : cliquer sur une carte l'agrandit et réduit les autres sur le côté
+(function () {
+  var container = document.querySelector('.projects');
+  var projects = document.querySelectorAll('.project');
+  if (!container || !projects.length) return;
+
+  function collapse() {
+    projects.forEach(function (p) { p.classList.remove('active'); });
+    container.classList.remove('has-active');
+  }
+
+  projects.forEach(function (p) {
+    p.addEventListener('click', function (e) {
+      if (e.target.closest('a')) return; // laisse les liens fonctionner normalement
+      var wasActive = p.classList.contains('active');
+      collapse();
+      if (!wasActive) {
+        p.classList.add('active');
+        container.classList.add('has-active');
+      }
+    });
+  });
+  
+  // Clic en dehors des cartes : revient à l'affichage normal
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.project')) collapse();
+  });
+})();
+
 // Bouton « Afficher mon numéro » : 1er clic affiche, 2e clic appelle
 (function () {
   var btn = document.getElementById('phoneBtn');
@@ -58,28 +163,4 @@
       location.href = 'tel:' + parts.join('');
     }
   });
-})();
- 
-// Captures d'écran : clic = plein écran (clic, croix ou Échap pour fermer)
-(function () {
-  var imgs = document.querySelectorAll('.screenshots img');
-  if (!imgs.length) return;
-  var box = document.createElement('div');
-  box.className = 'lightbox';
-  box.setAttribute('role', 'dialog');
-  box.setAttribute('aria-modal', 'true');
-  box.innerHTML = '<button type="button" aria-label="Fermer">&times;</button><img alt="">';
-  document.body.appendChild(box);
-  var big = box.querySelector('img');
-  function close() { box.classList.remove('open'); document.body.style.overflow = ''; }
-  imgs.forEach(function (img) {
-    img.addEventListener('click', function () {
-      big.src = img.currentSrc || img.src;
-      big.alt = img.alt;
-      box.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-  box.addEventListener('click', close);
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
 })();
