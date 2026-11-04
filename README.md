@@ -1,6 +1,6 @@
 # Bonjour, je suis Yaël André NEYPATRAIKY 👋
 
-Étudiant en cybersécurité à **Oteria** en cursus Expert Cybersécurité, je suis actuellement en train de me spécialiser dans les métiers des Systèmes, Réseaux et Cybersécurité, ainsi que la Gestion des Risques Cyber. Rigoureux et méthodique, j'apprécie structurer des données en informations exploitables pour un esécurisatiosn d'actifs. Mon parcours international (France et Madagascar) m'a donné une capacité d'adaptation et l'expérience de travailler dans un environnement multiculturel.
+Étudiant en cybersécurité à **Oteria** en cursus Expert Cybersécurité, je suis actuellement en train de me spécialiser dans les métiers des Systèmes, Réseaux et Cybersécurité, ainsi que la Gestion des Risques Cyber. Rigoureux et méthodique, j'apprécie structurer des données en informations exploitables pour une sécurisatiosn d'actifs. Mon parcours international (France et Madagascar) m'a donné une capacité d'adaptation et l'expérience de travailler dans un environnement multiculturel.
 
 ## Objectif
 
