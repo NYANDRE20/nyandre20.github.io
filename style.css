@@ -399,7 +399,7 @@ a {
 .timeline {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: auto auto auto auto auto;
   gap: 0 clamp(1rem, 2vw, 2.5rem);   /* row-gap à 0, column-gap inchangé */
   align-items: stretch;
@@ -411,10 +411,11 @@ a {
 /* L'ordre du HTML est du plus récent au plus ancien : on l'inverse à
    l'affichage (desktop ET mobile) pour que la frise se lise dans le sens
    chronologique, du plus ancien au plus récent. */
-.step:nth-child(1) { order: 4; }
-.step:nth-child(2) { order: 3; }
-.step:nth-child(3) { order: 2; }
-.step:nth-child(4) { order: 1; }
+.step:nth-child(1) { order: 5; }
+.step:nth-child(2) { order: 4; }
+.step:nth-child(3) { order: 3; }
+.step:nth-child(4) { order: 2; }
+.step:nth-child(5) { order: 1; }
 
 /* Flèche indiquant le sens de la chronologie, au bout de la ligne */
 .timeline::after {
