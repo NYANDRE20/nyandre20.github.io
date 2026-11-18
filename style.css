@@ -399,9 +399,9 @@ a {
 .timeline {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   grid-template-rows: auto auto auto auto auto;
-  gap: 0 clamp(1rem, 2vw, 2.5rem);   /* row-gap à 0, column-gap inchangé */
+  gap: 0 clamp(.6rem, 1vw, 1.5rem);
   align-items: stretch;
   border-top: 3px solid var(--ink);
   padding-top: 2.2rem;
@@ -1034,4 +1034,10 @@ footer.site {
   .project > div > p:last-child {
     margin-top: auto;
   }
+}
+
+@media (min-width: 1001px) and (max-width: 1400px) {
+  .step { padding: .9rem; }
+  .step h3 { font-size: 1.05rem; }
+  .step p, .step .bubble { font-size: .85rem; }
 }
